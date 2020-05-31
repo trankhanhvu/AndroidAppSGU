@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,7 +42,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -116,6 +119,27 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete:
                 if(noteID != null)
                 {
+                    final String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Are you sure !!!");
+                    builder.setNegativeButton(
+                            "No",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    builder.setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    deleteNote(path,noteID);
+                                    Intent main = new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(main);
+                                }
+                            });
+                    builder.show();
 
                 }
                 else
@@ -170,5 +194,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void deleteNote(String file,int position)
+    {
+        try {
+            DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = fac.newDocumentBuilder();
 
+            FileInputStream fIn = new FileInputStream(file);
+            Document doc = builder.parse(fIn);
+
+            Element root = doc.getDocumentElement(); //lấy tag Root ra
+            NodeList list = root.getChildNodes();// lấy toàn bộ node con của Root
+
+            int count = 0;
+            for (int i = 0; i < list.getLength(); i++)
+            {
+                Node node = list.item(i);// mỗi lần duyệt thì lấy ra 1 node
+
+                if (node instanceof Element) // kiểm tra node
+                {
+                    if(count == position)
+                    {
+                        Element element = (Element) node; //lấy được tag Note ra
+                        String title = element.getAttribute("title");//title là thuộc tính của tag note
+
+                        NodeList listChild = element.getElementsByTagName("content");// lấy tag name
+                        String content = listChild.item(0).getTextContent();//lấy nội dung của tag name
+
+                        node.getParentNode().removeChild(node);
+                    }
+                    count+=1;
+                }
+            }
+
+            EditActivity.saveToFile(doc,file);
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        }
+    }
 }

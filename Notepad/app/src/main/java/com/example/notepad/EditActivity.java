@@ -1,5 +1,7 @@
 package com.example.notepad;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -18,25 +20,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -63,10 +61,9 @@ public class EditActivity extends AppCompatActivity {
             noteID = bundle.getString("noteID");
         }
 
-
         if(!noteID.equals("null"))
         {
-            Log.i("test",noteID);
+
             noteItem = listNote.get(Integer.parseInt(noteID));
             EditText title = (EditText)findViewById(R.id.title);
             title.setText(noteItem.getTitle());
@@ -76,7 +73,7 @@ public class EditActivity extends AppCompatActivity {
             actionBar.setTitle(Html.fromHtml("<font color='#FFFFFF'>Edit Notepad</font>"));
         }
         else
-            actionBar.setTitle(Html.fromHtml("<font color='##FFFFFF'>New Notepad</font>"));
+            actionBar.setTitle(Html.fromHtml("<font color='#FFFFFF'>New Notepad</font>"));
     }
 
     @Override
@@ -103,7 +100,6 @@ public class EditActivity extends AppCompatActivity {
                     note.setContent(content.getText().toString());
 
                     String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
-                    Log.i("test",path);
                     writeToDOM(path,note);
 
                     Intent main = new Intent(getApplicationContext(),MainActivity.class);
@@ -111,7 +107,27 @@ public class EditActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.delete:
-                Toast.makeText(this, "hello 2", Toast.LENGTH_LONG).show();
+
+                final String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
+                builder.setTitle("Are you sure !!!");
+                builder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                MainActivity.deleteNote(path,Integer.parseInt(noteID));
+                                Intent main = new Intent(getApplicationContext(),MainActivity.class);
+                                startActivity(main);
+                            }
+                        });
+                builder.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -136,32 +152,28 @@ public class EditActivity extends AppCompatActivity {
             title.appendChild(content);
             root.appendChild(title);
 
-            try {
-                //for output to file, console
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                //for pretty print
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                DOMSource source = new DOMSource(doc);
+            saveToFile(doc,file);
 
-                Log.i("src", String.valueOf(source));
-
-                //write to console or file
-                StreamResult console = new StreamResult(System.out);
-                StreamResult file2 = new StreamResult(new File(file));
-
-                //write data
-                transformer.transform(source, console);
-                transformer.transform(source, file2);
-                System.out.println("DONE");
-
-            } catch (TransformerException te) {
-                System.out.println(te.getMessage());
-            }
         } catch (ParserConfigurationException pce) {
             System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
         } catch (SAXException | IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public static void saveToFile(Document doc,String file)
+    {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(doc);
+            StreamResult streamResult = new StreamResult(new File(file));
+
+            transformer.transform(domSource, streamResult);
+
+            System.out.println("Done creating XML File");
+        } catch (TransformerFactoryConfigurationError | TransformerException transformerFactoryConfigurationError) {
+            transformerFactoryConfigurationError.printStackTrace();
         }
     }
 }
