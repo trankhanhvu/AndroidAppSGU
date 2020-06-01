@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setTitle(Html.fromHtml("<font color='#FFFFFF'>♥ Notepad ♥</font>"));
 
         String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
-        ListView lstNotes = (ListView)findViewById(R.id.listNotes);
+        ListView lstNotes = (ListView) findViewById(R.id.listNotes);
         AdapterNoteList adapter = new AdapterNoteList(getApplicationContext(),
-                android.R.layout.simple_list_item_1, readByDOM(path)){
+                android.R.layout.simple_list_item_1, readByDOM(path)) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         };
         lstNotes.setAdapter(adapter);
 
-        lstNotes.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        lstNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 noteID = position;
@@ -96,29 +96,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add:
-                Intent addIntent = new Intent(getApplicationContext(),EditActivity.class);
-                addIntent.putExtra("noteID","null");
+                Intent addIntent = new Intent(getApplicationContext(), EditActivity.class);
+                addIntent.putExtra("noteID", "null");
                 startActivity(addIntent);
                 return true;
             case R.id.edit:
-                if(noteID != null)
-                {
-                    Intent editIntent = new Intent(getApplicationContext(),EditActivity.class);
-                    editIntent.putExtra("noteID",String.valueOf(noteID));
+                if (noteID != null) {
+                    Intent editIntent = new Intent(getApplicationContext(), EditActivity.class);
+                    editIntent.putExtra("noteID", String.valueOf(noteID));
                     Log.i("test", String.valueOf(noteID));
                     startActivity(editIntent);
-                }
-                else
-                {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("Please select the note first !!!");
-                    builder.setPositiveButton("OK",null);
+                    builder.setPositiveButton("OK", null);
                     builder.show();
                 }
                 return true;
             case R.id.delete:
-                if(noteID != null)
-                {
+                if (noteID != null) {
                     final String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("Are you sure !!!");
@@ -134,19 +130,17 @@ public class MainActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
-                                    deleteNote(path,noteID);
-                                    Intent main = new Intent(getApplicationContext(),MainActivity.class);
+                                    deleteNote(path, noteID);
+                                    Intent main = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(main);
                                 }
                             });
                     builder.show();
 
-                }
-                else
-                {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("Please select the note first !!!");
-                    builder.setPositiveButton("OK",null);
+                    builder.setPositiveButton("OK", null);
                     builder.show();
                 }
                 return true;
@@ -194,8 +188,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void deleteNote(String file,int position)
-    {
+    public static void deleteNote(String file, int position) {
         try {
             DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = fac.newDocumentBuilder();
@@ -207,14 +200,12 @@ public class MainActivity extends AppCompatActivity {
             NodeList list = root.getChildNodes();// lấy toàn bộ node con của Root
 
             int count = 0;
-            for (int i = 0; i < list.getLength(); i++)
-            {
+            for (int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);// mỗi lần duyệt thì lấy ra 1 node
 
                 if (node instanceof Element) // kiểm tra node
                 {
-                    if(count == position)
-                    {
+                    if (count == position) {
                         Element element = (Element) node; //lấy được tag Note ra
                         String title = element.getAttribute("title");//title là thuộc tính của tag note
 
@@ -223,11 +214,11 @@ public class MainActivity extends AppCompatActivity {
 
                         node.getParentNode().removeChild(node);
                     }
-                    count+=1;
+                    count += 1;
                 }
             }
 
-            EditActivity.saveToFile(doc,file);
+            EditActivity.saveToFile(doc, file);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
