@@ -7,17 +7,19 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
-
-        <Button
-            android:id="@+id/btnFtoC2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="F to C" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/textView2"
@@ -30,37 +32,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Độ C:" />
+            android:text="Độ C:"
+            />
 
         <EditText
             android:id="@+id/txtDoC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
         <Button
             android:id="@+id/btnFtoC"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="F to C" />
+            android:text="F to C"
+            android:background="@drawable/fcbtn"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/btnCtoF"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="C to F" />
+            android:text="C to F"
+            android:background="@drawable/ctofbtn"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:id="@+id/btnClear"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Clear" />
+            android:text="Clear"
+            android:background="@drawable/clearbtn"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
