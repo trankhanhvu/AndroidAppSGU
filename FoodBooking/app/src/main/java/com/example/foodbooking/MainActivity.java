@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.sax.Element;
 import android.telephony.SmsManager;
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                         smsManager.sendTextMessage(phoneNumber, null,
                                 order,
                                 null, null);
+
+                        Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(main);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
