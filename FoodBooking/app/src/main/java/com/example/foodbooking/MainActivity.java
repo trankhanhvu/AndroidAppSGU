@@ -93,52 +93,52 @@ public class MainActivity extends AppCompatActivity {
                 "Zucchini-Pear Soup",
                 "f1",
                 "https://www.cookingchanneltv.com/recipes/mark-bittman/zucchini-pear-soup-1961269"));
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Hương+Lài",
                 "Yangzhou Fried Rice",
                 "f2",
                 "https://www.cookingchanneltv.com/recipes/ching-he-huang/yangzhou-fried-rice-1961585"));
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Quang+Mập",
                 "Cauliflower Fried Rice",
                 "f3",
                 "https://www.cookingchanneltv.com/recipes/tiffani-thiessen/cauliflower-fried-rice-3629531"));
 
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Cừu+Non",
                 "Steamed Sea Bass with Ginger and Chinese Mushrooms",
                 "f4",
                 "https://www.cookingchanneltv.com/recipes/ching-he-huang/steamed-sea-bass-with-ginger-and-chinese-mushrooms-2042296"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Bamboo",
                 "Baked Chinese Rice with Peas and Ginger",
                 "f5",
                 "https://www.cookingchanneltv.com/recipes/bill-granger/baked-chinese-rice-with-peas-and-ginger-1959076"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Quỳnh",
                 "Arroz con Pollo",
                 "f6",
                 "https://www.cookingchanneltv.com/recipes/ingrid-hoffmann/arroz-con-pollo-1952724"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+A+SÌN",
                 "Chicken with Rice (Arroz con Pollo)",
                 "f7",
                 "https://www.cookingchanneltv.com/recipes/daisy-martinez/chicken-with-rice-arroz-con-pollo-1945235"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+ăn+A+Phón",
                 "Chicken Cacciatore",
                 "f8",
                 "https://www.cookingchanneltv.com/recipes/debi-mazar-and-gabriele-corcos/chicken-cacciatore-2106913"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+A+Cón",
                 "Trinidadian-Style Chicken",
                 "f9",
                 "https://www.cookingchanneltv.com/recipes/roger-mooking/trinidadian-style-chicken-1959070"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Bảy+Nở",
                 "Chicken South Indian Style",
                 "f10",
                 "https://www.cookingchanneltv.com/recipes/bal-arneson/chicken-south-indian-style-2010126"));
 
-        items.add(new ItemList("geo:0,0?q=14+Đồng+Đen+phường+14+Hồ+Chí+Minh+Bến+Nghé",
+        items.add(new ItemList("geo:0,0?q=Quán+Ăn+Bà+Bảo",
                 "Martinique Coconut Chicken Curry",
                 "f11",
                 "https://www.cookingchanneltv.com/recipes/levi-roots/martinique-coconut-chicken-curry-2010043"));
