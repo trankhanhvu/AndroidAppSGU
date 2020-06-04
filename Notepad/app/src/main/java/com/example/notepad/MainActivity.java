@@ -33,6 +33,7 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,33 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setTitle(Html.fromHtml("<font color='#FFFFFF'>♥ Notepad ♥</font>"));
 
         String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
+        File file = new File(path);
+        if(!file.exists())
+        {
+            File gpxfile = new File(String.valueOf(file));
+            FileWriter writer = null;
+            try {
+                writer = new FileWriter(gpxfile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                writer.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                        "<notes></notes>");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         ListView lstNotes = (ListView) findViewById(R.id.listNotes);
         AdapterNoteList adapter = new AdapterNoteList(getApplicationContext(),
                 android.R.layout.simple_list_item_1, readByDOM(path)) {
