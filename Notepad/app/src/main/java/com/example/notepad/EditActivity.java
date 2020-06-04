@@ -92,19 +92,24 @@ public class EditActivity extends AppCompatActivity {
                 EditText title = (EditText) findViewById(R.id.title);
                 EditText content = (EditText) findViewById(R.id.content);
 
-                NoteItem note = new NoteItem();
-                note.setTitle(title.getText().toString());
-                note.setContent(content.getText().toString());
+                String txtTitle = title.getText().toString();
+                String txtContent = content.getText().toString();
+                if (txtTitle.matches("") || txtContent.matches("")) {
+                    Toast.makeText(this, "Please enter title and content of the note !!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    NoteItem note = new NoteItem();
+                    note.setTitle(txtTitle);
+                    note.setContent(txtContent);
 
-                String pathSave = this.getFilesDir().getAbsolutePath() + "/abc.xml";
-                writeToDOM(pathSave, note);
+                    String pathSave = this.getFilesDir().getAbsolutePath() + "/abc.xml";
+                    writeToDOM(pathSave, note);
 
-                Intent main = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(main);
+                    Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(main);
+                }
 
                 return true;
             case R.id.delete:
-
                 final String pathDelete = this.getFilesDir().getAbsolutePath() + "/abc.xml";
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
                 builder.setTitle("Are you sure !!!");
@@ -119,8 +124,7 @@ public class EditActivity extends AppCompatActivity {
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (!noteID.equals("null"))
-                                {
+                                if (!noteID.equals("null")) {
                                     MainActivity.deleteNote(pathDelete, Integer.parseInt(noteID));
                                 }
                                 Intent main = new Intent(getApplicationContext(), MainActivity.class);
