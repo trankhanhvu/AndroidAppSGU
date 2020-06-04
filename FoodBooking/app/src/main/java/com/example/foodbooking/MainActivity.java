@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.sax.Element;
 import android.telephony.SmsManager;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -50,38 +52,78 @@ public class MainActivity extends AppCompatActivity {
 
                 final String order = "Your order : " + listFoodName;
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Please input your number !!!");
+                if (listFoodName.equals("")) {
+                    Toast.makeText(MainActivity.this, "Please select food first !!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Please input your number !!!");
 
-                // Set up the input
-                final EditText input = new EditText(context);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_PHONE);
-                builder.setView(input);
+                    final AlertDialog.Builder builderSuccess = new AlertDialog.Builder(context);
+                    builderSuccess.setTitle("Your order is success");
 
-                // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        phoneNumber = input.getText().toString();
+                    // Set up the buttons
+                    builderSuccess.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(main);
+                        }
+                    });
 
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(phoneNumber, null,
-                                order,
-                                null, null);
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_CLASS_PHONE);
+                    builder.setView(input);
 
-                        Intent main = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(main);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
 
-                builder.show();
+                    // Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            phoneNumber = input.getText().toString();
+
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(phoneNumber, null,
+                                    order,
+                                    null, null);
+                            builderSuccess.show();
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                    input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start,
+                                                  int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (s.length() == 0) {
+                                ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                                input.setError("This field can not be blank");
+                            } else {
+                                ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                            }
+                        }
+                    });
+                }
+
             }
         });
     }
