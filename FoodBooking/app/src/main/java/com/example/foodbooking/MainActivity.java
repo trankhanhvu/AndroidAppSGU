@@ -1,17 +1,22 @@
 package com.example.foodbooking;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.sax.Element;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -41,8 +46,24 @@ public class MainActivity extends AppCompatActivity {
 
         Button placeOrder = (Button) findViewById(R.id.placeOrder);
         placeOrder.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+                final int PERMISSION_REQUEST_CODE = 1;
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+                    if (checkSelfPermission(Manifest.permission.SEND_SMS)
+                            == PackageManager.PERMISSION_DENIED) {
+
+                        Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                        String[] permissions = {Manifest.permission.SEND_SMS};
+
+                        requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+
+                    }
+                }
+
                 String listFoodName = "";
                 for (Integer e : listOrder) {
                     ItemList food = list_food.get(e);
