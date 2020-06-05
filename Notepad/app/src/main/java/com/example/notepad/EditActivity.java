@@ -111,7 +111,7 @@ public class EditActivity extends AppCompatActivity {
                 return true;
             case R.id.delete:
                 final String pathDelete = this.getFilesDir().getAbsolutePath() + "/abc.xml";
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditActivity.this,R.style.MyDialogTheme);
                 builder.setTitle("Are you sure !!!");
                 builder.setNegativeButton(
                         "No",

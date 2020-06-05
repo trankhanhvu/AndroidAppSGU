@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("test", String.valueOf(noteID));
                     startActivity(editIntent);
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this,R.style.MyDialogTheme);
                     builder.setTitle("Please select the note first !!!");
                     builder.setPositiveButton("OK", null);
                     builder.show();
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete:
                 if (noteID != null) {
                     final String path = this.getFilesDir().getAbsolutePath() + "/abc.xml";
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this,R.style.MyDialogTheme);
                     builder.setTitle("Are you sure !!!");
                     builder.setNegativeButton(
                             "No",
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     builder.show();
 
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this,R.style.MyDialogTheme);
                     builder.setTitle("Please select the note first !!!");
                     builder.setPositiveButton("OK", null);
                     builder.show();

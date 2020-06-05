@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     builderSuccess.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            listOrder = new ArrayList<Integer>();
                             Intent main = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(main);
                         }
