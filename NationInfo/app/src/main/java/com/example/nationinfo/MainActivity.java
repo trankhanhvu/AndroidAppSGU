@@ -32,20 +32,20 @@ import cz.msebera.android.httpclient.impl.client.BasicResponseHandler;
 public class MainActivity extends AppCompatActivity {
 
     public static List<ItemList> list;
+    final List<ItemList> list_country = getListCountry();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final List<ItemList> list_country = getListCountry();
+
         list = list_country;
         final ListView listView = (ListView) findViewById(R.id.listCountry);
 
-        CustomListAdapter adapter = new CustomListAdapter(this, list_country);
+//        CustomListAdapter adapter = new CustomListAdapter(this, list_country);
+//
+//        listView.setAdapter(adapter);
 
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        listView.invalidateViews();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static List<ItemList> getListCountry() {
+    public List<ItemList> getListCountry() {
+
         final List<ItemList> items = new ArrayList<ItemList>();
 
         ItemList item = new ItemList("Country Code", "Country Name", "Capital", 0, 0);
@@ -94,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
                         items.add(item);
                     }
 
+                    final ListView listView = (ListView) findViewById(R.id.listCountry);
+
+                    CustomListAdapter adapter = new CustomListAdapter(MainActivity.this, list_country);
+
+                    listView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         return items;
     }
 }
