@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Doitiennew</string>
+    <string name="description">description</string>
+    <string name="nhapsotiencanchuyen">Nhập số tiền cần chuyển</string>
+    <string name="thankyou">Thank you all!!!</string>
+    <string name="so1">1</string>
+    <string name="sotiensaukhichuyen">Số tiền sau khi chuyển</string>
+    <string name="doi">Đổi</string>
+</resources>
